@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskPlanner Pro - Panel Premium de Gestión de Tareas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">✅</div>
+        <div>
+          <h2>TaskPlanner Pro</h2>
+          <p>Gestor Inteligente de Tareas</p>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <a href="#dashboard" class="menu-item active">📋 Panel</a>
+        <a href="#registro" class="menu-item">➕ Registrar tarea</a>
+        <a href="#herramientas" class="menu-item">🔎 Herramientas</a>
+        <a href="#lista" class="menu-item">🗂️ Tareas</a>
+        <a href="#resumen" class="menu-item">📊 Resumen</a>
+        <a href="#contacto" class="menu-item">ℹ️ Información</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar" id="dashboard">
+        <div>
+          <h1>Panel Premium de Gestión de Tareas</h1>
+          <p class="subtitle">
+            Organiza, filtra, edita y supervisa tus actividades desde una interfaz moderna.
+          </p>
+        </div>
+
+        <div class="topbar-meta">
+          <span class="top-badge">Versión 3.0</span>
+          <span class="top-date" id="currentDate">Cargando fecha...</span>
+          <span class="top-clock" id="currentTime">00:00:00</span>
+        </div>
+      </header>
+
+      <section class="hero-card">
+        <div class="hero-image-box">
+          <img src="images/taskplanner-banner.png" alt="Banner ilustrativo de TaskPlanner" class="hero-image" />
+        </div>
+
+        <div class="hero-content">
+          <span class="hero-tag">Panel inteligente de productividad</span>
+          <h3>TaskPlanner Pro</h3>
+          <p>
+            Registra tareas, edítalas, aplica filtros, consulta el progreso general
+            y mantén tus actividades guardadas en el navegador con LocalStorage.
+          </p>
+
+          <div class="hero-stats">
+            <div class="mini-stat">
+              <span class="mini-label">Total</span>
+              <strong id="totalTareasHero">0</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-label">Pendientes</span>
+              <strong id="pendientesHero">0</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-label">Completadas</span>
+              <strong id="completadasHero">0</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="progress-section" id="resumen">
+        <article class="stat-card stat-total">
+          <span class="stat-title">Total de tareas</span>
+          <h3 id="totalTareas">0</h3>
+          <p>Todas las tareas registradas en el sistema</p>
+        </article>
+
+        <article class="stat-card stat-pending">
+          <span class="stat-title">Tareas pendientes</span>
+          <h3 id="tareasPendientes">0</h3>
+          <p>Actividades aún no completadas</p>
+        </article>
+
+        <article class="stat-card stat-completed">
+          <span class="stat-title">Tareas completadas</span>
+          <h3 id="tareasCompletadas">0</h3>
+          <p>Tareas finalizadas correctamente</p>
+        </article>
+
+        <article class="progress-card">
+          <div class="progress-header">
+            <div>
+              <span class="stat-title">Progreso general</span>
+              <h3 id="progressPercentage">0%</h3>
+            </div>
+            <div class="progress-circle" id="progressCircle">
+              <span id="progressCircleText">0%</span>
+            </div>
+          </div>
+
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+          </div>
+
+          <p class="progress-text" id="progressText">
+            Aún no hay tareas registradas para calcular el avance.
+          </p>
+        </article>
+      </section>
+
+      <section class="form-card" id="registro">
+        <div class="section-header">
+          <div>
+            <h2>Registrar nueva tarea</h2>
+            <p>Completa el formulario para agregar o editar una actividad.</p>
+          </div>
+          <span class="badge-soft" id="formModeBadge">Modo creación</span>
+        </div>
+
+        <form id="taskForm" class="task-form">
+          <input type="hidden" id="editIndex" value="" />
+
+          <div class="form-grid">
+            <div class="form-group form-group-full">
+              <label for="titulo">Título de la tarea</label>
+              <input type="text" id="titulo" name="titulo" placeholder="Ejemplo: Preparar exposición de software"
+                required />
+            </div>
+
+            <div class="form-group form-group-full">
+              <label for="descripcion">Descripción</label>
+              <textarea id="descripcion" name="descripcion" rows="4" placeholder="Describe aquí la tarea a realizar..."
+                required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="categoria">Categoría</label>
+              <select id="categoria" name="categoria" required>
+                <option value="">Seleccione una categoría</option>
+                <option value="Académica">Académica</option>
+                <option value="Personal">Personal</option>
+                <option value="Laboral">Laboral</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="prioridad">Prioridad</label>
+              <select id="prioridad" name="prioridad" required>
+                <option value="">Seleccione una prioridad</option>
+                <option value="Alta">Alta</option>
+                <option value="Media">Media</option>
+                <option value="Baja">Baja</option>
+              </select>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label for="fecha">Fecha límite</label>
+              <input type="date" id="fecha" name="fecha" required />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn" id="submitBtn">+ Agregar tarea</button>
+            <button type="reset" class="secondary-btn" id="resetBtn">Limpiar formulario</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="tools-card" id="herramientas">
+        <div class="section-header">
+          <div>
+            <h2>Herramientas de búsqueda y filtrado</h2>
+            <p>Encuentra rápidamente las tareas según texto, estado o prioridad.</p>
+          </div>
+          <span class="badge-soft">Filtros inteligentes</span>
+        </div>
+
+        <div class="tools-grid">
+          <div class="form-group">
+            <label for="searchInput">Buscar tarea</label>
+            <input type="text" id="searchInput" placeholder="Buscar por título o descripción..." />
+          </div>
+
+          <div class="form-group">
+            <label for="filterStatus">Filtrar por estado</label>
+            <select id="filterStatus">
+              <option value="Todas">Todas</option>
+              <option value="Pendiente">Pendientes</option>
+              <option value="Completada">Completadas</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="filterPriority">Filtrar por prioridad</label>
+            <select id="filterPriority">
+              <option value="Todas">Todas</option>
+              <option value="Alta">Alta</option>
+              <option value="Media">Media</option>
+              <option value="Baja">Baja</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="list-card" id="lista">
+        <div class="section-header">
+          <div>
+            <h2>Lista de tareas registradas</h2>
+            <p>Visualiza, completa, edita o elimina las tareas almacenadas.</p>
+          </div>
+          <span class="badge-soft" id="taskCountBadge">0 tareas</span>
+        </div>
+
+        <div id="taskList" class="task-list"></div>
+      </section>
+
+      <section class="info-card" id="contacto">
+        <div class="section-header">
+          <div>
+            <h2>Información del proyecto</h2>
+            <p>Tercera versión funcional del sistema TaskPlanner Pro.</p>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <span>Proyecto</span>
+            <strong>TaskPlanner Pro - Panel Premium de Gestión de Tareas</strong>
+          </div>
+          <div class="info-item">
+            <span>Entorno</span>
+            <strong>Visual Studio Code</strong>
+          </div>
+          <div class="info-item">
+            <span>Tecnologías</span>
+            <strong>HTML, CSS y JavaScript</strong>
+          </div>
+          <div class="info-item">
+            <span>Almacenamiento</span>
+            <strong>LocalStorage</strong>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
